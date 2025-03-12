@@ -2,12 +2,14 @@ import dotenv from 'dotenv'
 import express from 'express'
 import stripe from 'stripe'
 import {db} from './connect.js'
+import cors from 'cors'
 
 dotenv.config({path: '../.env'})
 
 const stripeKey = stripe(process.env.STRIPE_KEY_TEST)
 
 const app = express()
+app.use(cors())
 app.use(express.static('public'))
 const port = process.env.PORT;
 
