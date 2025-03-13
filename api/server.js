@@ -3,6 +3,7 @@ import express from 'express'
 import stripe from 'stripe'
 import { db } from './connect.js'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 
 dotenv.config({ path: '../.env' })
 
@@ -10,7 +11,8 @@ const stripeKey = stripe(process.env.STRIPE_KEY_TEST)
 
 const app = express()
 app.use(cors())
-app.use(express.static('public'))
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
 const port = process.env.PORT;
 
 app.get("/", (req, res) => {
@@ -40,14 +42,3 @@ app.post('/create-checkout-session', async (req, res) => {
 app.listen(port, () => {
   console.log(`Conectado na porta ${port}`);
 })
-
-// const productsObj = []
-
-  // const prices = req.query.priceid
-
-  // prices.forEach((price) => {
-  //   const Product = new Object()
-  //   Product.price = price
-  //   Product.quantity = 1
-  //   productsObj.push(Product)
-  // })
