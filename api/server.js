@@ -30,7 +30,12 @@ app.get("/cancel", (req, res) => {
 
 app.post('/create-checkout-session', async (req, res) => {
   const session = await stripeKey.checkout.sessions.create({
-    line_items: req.body,
+    line_items: [
+      {
+        price: "price_1R1YNVGlZxAZZY3yIio9Tx2G",
+        quantity: 1
+      }
+    ],
     mode: 'payment',
     success_url: 'https://ricdpaula.github.io',
     cancel_url: 'https://ricdpaula.github.io',
