@@ -41,8 +41,8 @@ app.post('/create-checkout-session/cart?', async (req, res) => {
     const session = await stripeKey.checkout.sessions.create({
       line_items: productsObj,
       mode: 'payment',
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: 'https://ricdpaula.github.io',
+      cancel_url: 'https://ricdpaula.github.io',
     });
   
     res.redirect(303, session.url);
