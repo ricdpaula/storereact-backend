@@ -26,17 +26,23 @@ app.get("/cancel", (req, res)=>{
     res.send("Solicitação cancelada")
 })
 
-app.post('/create-checkout-session/:priceid', async (req, res) => {
+app.post('/create-checkout-session/cart?', async (req, res) => {
+
+  const productsObj = []
+
+  const prices = req.query.priceid
+
+  prices.forEach((price) => {
+    const Product = new Object()
+    Product.price = price
+    Product.quantity = 1
+    productsObj.push(Product)
+  })
     const session = await stripeKey.checkout.sessions.create({
-      line_items: [
-        {
-          price: req.params.priceid,
-          quantity: 1,
-        },
-      ],
+      line_items: productsObj,
       mode: 'payment',
-      success_url: '/success',
-      cancel_url: '/cancel',
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel',
     });
   
     res.redirect(303, session.url);
